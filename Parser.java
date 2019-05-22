@@ -11,6 +11,7 @@ import java.util.List;
 import diamond.ast.ASTLeaf;
 import diamond.ast.ASTList;
 import diamond.ast.ASTree;
+import diamond.ast.BinaryExpr;
 
 
 
@@ -416,6 +417,11 @@ public class Parser {
 		elements.add(new OrTree(new Parser[] {p,p2}));
 		return this;
 	}
+	public Parser repeat(Parser p)
+	{
+		elements.add(new Repeat(p, false));
+		return this;
+	}
 	public Parser option(Parser p) {
 		elements.add(new Repeat(p,true));
 		return this;
@@ -424,7 +430,7 @@ public class Parser {
 		elements.add(new Expr(null, subexp, operators));
 		return this;
 	}
-	public Parser expression(Class<? extends ASTLeaf>clazz,Parser subexp,Operators operators) {
+	public Parser expression(Class<BinaryExpr> clazz,Parser subexp,Operators operators) {
 		elements.add(new Expr(clazz, subexp, operators));
 		return this;
 	}
